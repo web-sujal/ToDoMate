@@ -22,6 +22,7 @@ const StyledLink = styled(Link)({
   "&:hover, &:focus, &:visited, &:link, &:active": {
     textDecoration: "none",
     border: "none",
+    outline: "none",
   },
 });
 
@@ -37,11 +38,20 @@ const SidebarItems = ({
       <ListItemButton
         selected={selectedIndex === currentIndex}
         onClick={() => setSelectedIndex(currentIndex)}
+        sx={{
+          "&.Mui-selected": {
+            borderRight: "4px solid #212121",
+          },
+        }}
+        // tabIndex={currentIndex}
       >
         <ListItemIcon>
-          <Icon />
+          <Icon sx={{ color: "primary.light" }} />
         </ListItemIcon>
-        <ListItemText primary={text} />
+        <ListItemText
+          primary={text}
+          primaryTypographyProps={{ fontSize: "20px" }}
+        />
       </ListItemButton>
     </StyledLink>
   );

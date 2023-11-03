@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 const Home = () => {
   return (
-    <Box flex={4} width={"100%"}>
+    <Box flex={4} width={"100%"} sx={{ minHeight: "100vh" }}>
       <Navbar />
       <Outlet />
     </Box>

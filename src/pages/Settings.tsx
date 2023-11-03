@@ -1,5 +1,7 @@
+import { Typography } from "@mui/material";
+
 const Settings = () => {
-  return <div>Settings</div>;
+  return <Typography variant={"h2"}>Settings</Typography>;
 };
 
 export default Settings;

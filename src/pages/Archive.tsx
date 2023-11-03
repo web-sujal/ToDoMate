@@ -1,5 +1,7 @@
+import { Typography } from "@mui/material";
+
 const Archive = () => {
-  return <div>Archive</div>;
+  return <Typography variant={"h2"}>Archive</Typography>;
 };
 
 export default Archive;
