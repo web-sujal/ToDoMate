@@ -40,7 +40,7 @@ const SidebarItems = ({
         onClick={() => setSelectedIndex(currentIndex)}
         sx={{
           "&.Mui-selected": {
-            borderRight: "4px solid #212121",
+            borderRight: "4px solid #283618",
           },
         }}
         // tabIndex={currentIndex}

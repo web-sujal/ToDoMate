@@ -2,30 +2,43 @@ import { createTheme } from "@mui/material";
 
 export const lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: '#212121', 
+      main: "#283618",
     },
     secondary: {
-      main: '#f50057', 
+      main: "#f50057",
     },
     background: {
-      default: '#fff3e0', 
+      default: "#ffe5ba",
+      paper: "#fff3e0",
     },
   },
 });
 
 export const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#263238', 
+      main: "#263238",
     },
     secondary: {
-      main: '#f50057', 
+      main: "#f50057",
     },
     background: {
-      default: '#212121', 
+      default: "#212121",
     },
   },
 });
+
+/*
+
+{
+  "Dark moss green":"#606c38",
+  "Pakistan green":"#283618",
+  "Cornsilk":"#fefae0",
+  "Earth yellow":"#dda15e",
+  "Tiger’s Eye":"#bc6c25"
+}
+
+*/

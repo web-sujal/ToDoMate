@@ -59,9 +59,13 @@ const Sidebar = () => {
     <Box
       sx={{
         width: "100%",
-        maxWidth: 300,
+        maxWidth: 280,
         bgcolor: "background.default",
         minHeight: "100vh",
+        display: {
+          xs: "none",
+          sm: "block",
+        },
       }}
     >
       <Box
@@ -75,7 +79,6 @@ const Sidebar = () => {
           animationData={animationData}
           loop={false}
           autoplay={true}
-          // onComplete={handleLoopAnimation}
           lottieRef={animationRef}
           onClick={handleClick}
           style={{ cursor: "pointer" }}
@@ -85,14 +88,17 @@ const Sidebar = () => {
           sx={{
             fontFamily: "Raleway, sans-serif",
             marginLeft: 1,
-            fontSize: "25px",
+            fontWeight: "800",
+            fontSize: "30px",
+            pt: 1,
+            color: "#283618",
           }}
         >
           ToDoMate
         </Typography>
       </Box>
 
-      <Divider />
+      <Divider variant="middle" />
 
       <List component="nav" aria-label="sidebar items">
         {listItemText.map((text, index) => (
