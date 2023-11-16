@@ -3,6 +3,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Drawer,
   styled,
   useMediaQuery,
   useTheme,
@@ -10,6 +11,7 @@ import {
 import { useState } from "react";
 import { Mail, Menu, Notifications, Search } from "@mui/icons-material";
 import InputField from "./InputField";
+import Sidebar from "./Sidebar";
 
 const StyledBadge = styled(Badge)({
   "&:hover": {
@@ -70,6 +72,17 @@ const Navbar = () => {
               Icon={Search}
             />
           )}
+
+          {/* Drawer */}
+          <Drawer
+            variant="temporary"
+            open={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            // onClick={() => setIsMenuOpen(false)}
+            sx={{ display: { xs: "block", sm: "none" }, mr: 3 }}
+          >
+            <Sidebar />
+          </Drawer>
 
           {/* Right Side */}
           <Box

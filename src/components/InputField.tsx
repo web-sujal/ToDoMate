@@ -10,7 +10,7 @@ type InputboxProps = {
   handleClick: () => void;
   isMobile: boolean;
   onBlur?: () => void;
-  Icon?: React.ComponentType;
+  Icon?: any;
 };
 
 const StyledInput = styled(Input)({

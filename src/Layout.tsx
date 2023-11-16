@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import "./App.css";
@@ -6,7 +6,9 @@ import "./App.css";
 const Layout = () => {
   return (
     <Stack direction="row">
-      <Sidebar />
+      <Box sx={{ display: { xs: "none", sm: "block" } }}>
+        <Sidebar />
+      </Box>
       <Home />
     </Stack>
   );

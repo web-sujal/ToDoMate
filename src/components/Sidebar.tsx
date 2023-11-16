@@ -59,13 +59,10 @@ const Sidebar = () => {
     <Box
       sx={{
         width: "100%",
+        mr: 3,
         maxWidth: 280,
         bgcolor: "background.default",
         minHeight: "100vh",
-        display: {
-          xs: "none",
-          sm: "block",
-        },
       }}
     >
       <Box
