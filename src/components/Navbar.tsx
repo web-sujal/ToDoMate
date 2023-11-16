@@ -4,12 +4,21 @@ import {
   Badge,
   Box,
   Drawer,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   styled,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { Mail, Menu, Notifications, Search } from "@mui/icons-material";
+import {
+  Logout,
+  Mail,
+  Notifications,
+  Search,
+  Menu as MenuIcon,
+} from "@mui/icons-material";
 import InputField from "./InputField";
 import Sidebar from "./Sidebar";
 
@@ -23,6 +32,7 @@ const StyledBadge = styled(Badge)({
 const Navbar = () => {
   const [searchedTask, setSearchedTask] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -45,9 +55,9 @@ const Navbar = () => {
         >
           {/* Left Side */}
           {isMobile ? (
-            <Menu
+            <MenuIcon
               aria-label="Sidebar Menu"
-              onClick={() => setIsMenuOpen(true)}
+              onClick={() => setIsSidebarOpen(true)}
               sx={{
                 mr: 4,
                 cursor: "pointer",
@@ -76,9 +86,9 @@ const Navbar = () => {
           {/* Drawer */}
           <Drawer
             variant="temporary"
-            open={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-            // onClick={() => setIsMenuOpen(false)}
+            open={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+            // onClick={() => setIsSidebarOpen(false)}
             sx={{ display: { xs: "block", sm: "none" }, mr: 3 }}
           >
             <Sidebar />
@@ -130,6 +140,7 @@ const Navbar = () => {
               </StyledBadge>
               <Avatar
                 alt="Sujal Rajput"
+                onClick={() => setIsMenuOpen(true)}
                 sx={{
                   backgroundColor: "white",
                   color: "black",
@@ -141,6 +152,31 @@ const Navbar = () => {
               >
                 S
               </Avatar>
+
+              {/* menu */}
+              <Menu
+                open={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
+                  <Avatar />
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
+                  <ListItemIcon>
+                    <Logout sx={{ ml: 1 }} fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
             </Box>
           </Box>
         </Box>
