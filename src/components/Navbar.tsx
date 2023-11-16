@@ -67,6 +67,7 @@ const Navbar = () => {
               }}
               handleClick={handleClick}
               isMobile={false}
+              Icon={Search}
             />
           )}
 
@@ -74,8 +75,8 @@ const Navbar = () => {
           <Box
             sx={{
               display: "flex",
-              width: "100%",
               alignItems: "center",
+              width: isMobile ? "auto" : "100%",
               justifyContent: "space-between",
               gap: 3,
               cursor: "pointer",
@@ -96,7 +97,7 @@ const Navbar = () => {
                 handleClick={handleClick}
                 isMobile={true}
                 onBlur={() => setIsSearchOpen(false)}
-                // Icon={<Search />}
+                Icon={Search}
               />
             )}
 

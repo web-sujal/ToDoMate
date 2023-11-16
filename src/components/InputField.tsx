@@ -1,6 +1,4 @@
-import { Search } from "@mui/icons-material";
 import { styled, Input, InputAdornment } from "@mui/material";
-import React from "react";
 
 type InputboxProps = {
   placeholder: string;
@@ -12,7 +10,7 @@ type InputboxProps = {
   handleClick: () => void;
   isMobile: boolean;
   onBlur?: () => void;
-  Icon?: any;
+  Icon?: React.ComponentType;
 };
 
 const StyledInput = styled(Input)({
@@ -36,7 +34,6 @@ const InputField = ({
   onBlur,
   Icon,
 }: InputboxProps) => {
-  // console.log("InputField rendered");
   return (
     <StyledInput
       autoFocus={true}
@@ -47,12 +44,12 @@ const InputField = ({
       onChange={onChange}
       onKeyDown={onKeyDown}
       sx={{ display: isMobile ? "" : "none" }}
+      onBlur={onBlur}
       endAdornment={
         <InputAdornment position="end">
-          <Search
+          <Icon
             onClick={handleClick}
             aria-label="Search tasks"
-            onBlur={onBlur}
             sx={{
               cursor: "pointer",
               "&:hover": {
