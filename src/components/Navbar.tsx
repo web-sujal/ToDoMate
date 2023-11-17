@@ -140,9 +140,11 @@ const Navbar = () => {
               </StyledBadge>
               <Avatar
                 alt="Sujal Rajput"
+                src="/assets/sujal-pfp.jpeg"
                 onClick={() => setIsMenuOpen(true)}
                 sx={{
                   backgroundColor: "white",
+                  objectFit: "cover",
                   color: "black",
                   "&:hover": {
                     transform: "translateY(-3px) scale(1.05)",
