@@ -11,10 +11,11 @@ const Overview = () => {
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: isMobile ? "flex-start" : "space-around",
+        p: isMobile ? 0 : 2,
+        pt: 2,
         gap: 2,
-        p: 2,
-        bgcolor: "coral",
+        width: "100%",
       }}
     >
       <TodosWrapper heading="Pending" />

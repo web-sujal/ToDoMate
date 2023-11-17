@@ -173,7 +173,11 @@ const Navbar = () => {
               }}
             >
               <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
-                <Avatar />
+                <Avatar
+                  alt="profile-pic"
+                  src="/assets/sujal-pfp.jpeg"
+                  sx={{ objectFit: "cover" }}
+                />
                 Profile
               </MenuItem>
               <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>

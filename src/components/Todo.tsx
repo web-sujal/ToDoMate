@@ -1,14 +1,5 @@
 import { DragIndicator } from "@mui/icons-material";
-import {
-  Box,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  FormGroup,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Checkbox, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 
 type TodoProps = {
@@ -16,8 +7,6 @@ type TodoProps = {
 };
 
 const Todo = ({ text }: TodoProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [checked, setChecked] = useState(false);
 
   const todo = text.length <= 24 ? text : text.substring(0, 24) + "...";
@@ -31,7 +20,6 @@ const Todo = ({ text }: TodoProps) => {
           justifyContent: "start",
           gap: 1,
           cursor: "pointer",
-          // width: "100%",
         }}
       >
         <Checkbox
@@ -39,7 +27,6 @@ const Todo = ({ text }: TodoProps) => {
           onClick={() => setChecked(!checked)}
           color="secondary"
         />
-        {/* sx={{ width: isMobile ? "60vw" : "30vw" }} */}
         <Typography
           noWrap={true}
           sx={{
