@@ -58,7 +58,9 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
+        position: "sticky",
         width: "100%",
+        height: "100%",
         mr: 3,
         maxWidth: 280,
         bgcolor: "background.default",

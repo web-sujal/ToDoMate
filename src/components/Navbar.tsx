@@ -42,31 +42,70 @@ const Navbar = () => {
   };
 
   return (
-    <Box sx={{ width: "full" }}>
-      <AppBar position="sticky" sx={{ p: 0.5 }}>
+    <AppBar position="sticky" sx={{ p: 0.5 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 1,
+          paddingX: 2,
+        }}
+      >
+        {/* Left Side */}
+        {isMobile ? (
+          <MenuIcon
+            aria-label="Sidebar Menu"
+            onClick={() => setIsSidebarOpen(true)}
+            sx={{
+              mr: 4,
+              cursor: "pointer",
+              "&:hover": {
+                transform: "translateY(-3px) scale(1.05)",
+                transition: "transform 0.3s",
+              },
+            }}
+          />
+        ) : (
+          <InputField
+            placeholder="search tasks..."
+            type="search"
+            ariaLabel="search tasks"
+            name="searchedTask"
+            onChange={(e) => setSearchedTask(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") handleClick();
+            }}
+            handleClick={handleClick}
+            isMobile={false}
+            Icon={Search}
+          />
+        )}
+
+        {/* Drawer */}
+        <Drawer
+          variant="temporary"
+          open={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          // onClick={() => setIsSidebarOpen(false)}
+          sx={{ display: { xs: "block", sm: "none" }, mr: 3 }}
+        >
+          <Sidebar />
+        </Drawer>
+
+        {/* Right Side */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
+            width: isMobile ? "auto" : "100%",
             justifyContent: "space-between",
-            p: 1,
-            paddingX: 2,
+            gap: 3,
+            cursor: "pointer",
           }}
         >
-          {/* Left Side */}
-          {isMobile ? (
-            <MenuIcon
-              aria-label="Sidebar Menu"
-              onClick={() => setIsSidebarOpen(true)}
-              sx={{
-                mr: 4,
-                cursor: "pointer",
-                "&:hover": {
-                  transform: "translateY(-3px) scale(1.05)",
-                  transition: "transform 0.3s",
-                },
-              }}
-            />
+          {isMobile && !isSearchOpen ? (
+            <Search onClick={() => setIsSearchOpen(true)} />
           ) : (
             <InputField
               placeholder="search tasks..."
@@ -78,112 +117,76 @@ const Navbar = () => {
                 if (event.key === "Enter") handleClick();
               }}
               handleClick={handleClick}
-              isMobile={false}
+              isMobile={true}
+              onBlur={() => setIsSearchOpen(false)}
               Icon={Search}
             />
           )}
 
-          {/* Drawer */}
-          <Drawer
-            variant="temporary"
-            open={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-            // onClick={() => setIsSidebarOpen(false)}
-            sx={{ display: { xs: "block", sm: "none" }, mr: 3 }}
-          >
-            <Sidebar />
-          </Drawer>
-
-          {/* Right Side */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              width: isMobile ? "auto" : "100%",
-              justifyContent: "space-between",
+              justifyContent: "center",
               gap: 3,
-              cursor: "pointer",
             }}
           >
-            {isMobile && !isSearchOpen ? (
-              <Search onClick={() => setIsSearchOpen(true)} />
-            ) : (
-              <InputField
-                placeholder="search tasks..."
-                type="search"
-                ariaLabel="search tasks"
-                name="searchedTask"
-                onChange={(e) => setSearchedTask(e.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") handleClick();
-                }}
-                handleClick={handleClick}
-                isMobile={true}
-                onBlur={() => setIsSearchOpen(false)}
-                Icon={Search}
-              />
-            )}
-
-            <Box
+            <StyledBadge badgeContent={2} color="secondary">
+              <Notifications sx={{ color: "white" }} />
+            </StyledBadge>
+            <StyledBadge badgeContent={4} color="secondary">
+              <Mail sx={{ color: "white" }} />
+            </StyledBadge>
+            <Avatar
+              alt="Sujal Rajput"
+              src="/assets/sujal-pfp.jpeg"
+              onClick={() => setIsMenuOpen(true)}
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 3,
+                backgroundColor: "white",
+                objectFit: "cover",
+                color: "black",
+                "&:hover": {
+                  transform: "translateY(-3px) scale(1.05)",
+                  transition: "transform 0.3s",
+                },
               }}
             >
-              <StyledBadge badgeContent={2} color="secondary">
-                <Notifications sx={{ color: "white" }} />
-              </StyledBadge>
-              <StyledBadge badgeContent={4} color="secondary">
-                <Mail sx={{ color: "white" }} />
-              </StyledBadge>
-              <Avatar
-                alt="Sujal Rajput"
-                src="/assets/sujal-pfp.jpeg"
-                onClick={() => setIsMenuOpen(true)}
-                sx={{
-                  backgroundColor: "white",
-                  objectFit: "cover",
-                  color: "black",
-                  "&:hover": {
-                    transform: "translateY(-3px) scale(1.05)",
-                    transition: "transform 0.3s",
-                  },
-                }}
-              >
-                S
-              </Avatar>
+              S
+            </Avatar>
 
-              {/* menu */}
-              <Menu
-                open={isMenuOpen}
-                onClose={() => setIsMenuOpen(false)}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-              >
-                <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
-                  <Avatar />
-                  Profile
-                </MenuItem>
-                <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
-                  <ListItemIcon>
-                    <Logout sx={{ ml: 1 }} fontSize="small" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-              </Menu>
-            </Box>
+            {/* menu */}
+            <Menu
+              open={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              sx={{
+                "& .MuiPaper-root": {
+                  bgcolor: "white",
+                },
+              }}
+            >
+              <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
+                <Avatar />
+                Profile
+              </MenuItem>
+              <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
+                <ListItemIcon>
+                  <Logout sx={{ ml: 1 }} fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
           </Box>
         </Box>
-      </AppBar>
-    </Box>
+      </Box>
+    </AppBar>
   );
 };
 

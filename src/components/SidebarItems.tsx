@@ -34,7 +34,7 @@ const SidebarItems = ({
   currentIndex,
 }: SidebarItemsProps) => {
   return (
-    <StyledLink to={text}>
+    <StyledLink to={text.toLowerCase()}>
       <ListItemButton
         selected={selectedIndex === currentIndex}
         onClick={() => setSelectedIndex(currentIndex)}
