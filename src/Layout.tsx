@@ -6,7 +6,7 @@ import "./App.css";
 const Layout = () => {
   return (
     <Stack direction="row">
-      <Box sx={{ display: { xs: "none", sm: "block" } }}>
+      <Box sx={{ display: { xs: "none", sm: "block", height: "100vh" } }}>
         <Sidebar />
       </Box>
       <Home />

@@ -55,7 +55,28 @@ const TodosWrapper = ({ heading }: TodosWrapperProps) => {
       </Button>
 
       {/* Todos */}
-      <Box sx={{ width: "100%" }}>
+      <Box
+        sx={{
+          width: "100%",
+          overflowY: "scroll",
+          maxHeight: "55vh",
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "primary.main",
+          },
+          "&::-webkit-scrollbar": {
+            width: 3,
+          },
+        }}
+      >
+        <Todo text="Watch Loki s2" />
+        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
+        <Todo text="Download Vinland Saga" />
+        <Todo text="Watch Loki s2" />
+        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
+        <Todo text="Download Vinland Saga" />
+        <Todo text="Watch Loki s2" />
+        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
+        <Todo text="Download Vinland Saga" />
         <Todo text="Watch Loki s2" />
         <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
         <Todo text="Download Vinland Saga" />

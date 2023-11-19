@@ -1,4 +1,5 @@
 import {
+  Add,
   ArchiveOutlined,
   DeleteOutlined,
   GroupsOutlined,
@@ -10,11 +11,14 @@ import {
 import {
   Box,
   Divider,
+  Fab,
   List,
   ListItemButton,
   ListItemIcon,
   Switch,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import SidebarItems from "./SidebarItems";
@@ -42,6 +46,8 @@ const listItemText = [
 const Sidebar = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const animationRef = useRef<LottieRefCurrentProps>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,8 +63,8 @@ const Sidebar = () => {
 
   return (
     <Box
+      position="sticky"
       sx={{
-        position: "sticky",
         width: "100%",
         height: "100%",
         mr: 3,
@@ -118,6 +124,22 @@ const Sidebar = () => {
           <Switch color="primary" />
         </ListItemButton>
       </List>
+      <Fab
+        color="secondary"
+        aria-label="add"
+        sx={{
+          position: "fixed",
+          bottom: "40px",
+          left: "80px",
+          transform: "translateX(-50%)",
+          display: isMobile ? "none" : "",
+          "&:hover": {
+            bgcolor: "secondary.light",
+          },
+        }}
+      >
+        <Add />
+      </Fab>
     </Box>
   );
 };

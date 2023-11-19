@@ -1,8 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, Fab, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { Add } from "@mui/icons-material";
 
 const Home = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       flex={4}
@@ -12,6 +16,22 @@ const Home = () => {
     >
       <Navbar />
       <Outlet />
+      <Fab
+        color="secondary"
+        aria-label="add"
+        sx={{
+          position: "fixed",
+          bottom: "25px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: isMobile ? "" : "none",
+          "&:hover": {
+            bgcolor: "secondary.light",
+          },
+        }}
+      >
+        <Add />
+      </Fab>
     </Box>
   );
 };
