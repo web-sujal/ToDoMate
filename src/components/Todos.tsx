@@ -1,11 +1,20 @@
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, List, Paper, Typography } from "@mui/material";
 import Todo from "./Todo";
 
-type TodosWrapperProps = {
-  heading: string;
+type Todo = {
+  id: number;
+  text: string;
+  completed: boolean;
+  createdAt: Date;
 };
 
-const TodosWrapper = ({ heading }: TodosWrapperProps) => {
+type TodosProps = {
+  heading: string;
+  pendingTodos?: Array<Todo>;
+  completedTodos?: Array<Todo>;
+};
+
+const Todos = ({ heading, pendingTodos, completedTodos }: TodosProps) => {
   return (
     <Paper
       sx={{
@@ -55,7 +64,7 @@ const TodosWrapper = ({ heading }: TodosWrapperProps) => {
       </Button>
 
       {/* Todos */}
-      <Box
+      <List
         sx={{
           width: "100%",
           overflowY: "scroll",
@@ -68,21 +77,15 @@ const TodosWrapper = ({ heading }: TodosWrapperProps) => {
           },
         }}
       >
-        <Todo text="Watch Loki s2" />
-        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
-        <Todo text="Download Vinland Saga" />
-        <Todo text="Watch Loki s2" />
-        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
-        <Todo text="Download Vinland Saga" />
-        <Todo text="Watch Loki s2" />
-        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
-        <Todo text="Download Vinland Saga" />
-        <Todo text="Watch Loki s2" />
-        <Todo text="Collect Fanny LightBorn Skin with ablazing skill animations" />
-        <Todo text="Download Vinland Saga" />
-      </Box>
+        {pendingTodos &&
+          pendingTodos.map((todo) => <Todo text={todo.text} key={todo.id} />)}
+        {completedTodos &&
+          completedTodos.map((todo) => (
+            <Todo text={todo.text} key={todo.id} completed={todo.completed} />
+          ))}
+      </List>
     </Paper>
   );
 };
 
-export default TodosWrapper;
+export default Todos;

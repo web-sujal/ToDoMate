@@ -1,16 +1,20 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import TodosWrapper from "../components/TodosWrapper";
+import Todos from "../components/Todos";
+import { todos } from "../mockData/todos";
 
 const Overview = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const pendingTodos = todos.filter((todo) => !todo.completed);
+  const completedTodos = todos.filter((todo) => todo.completed);
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
-        alignItems: "center",
+        alignItems: "start",
         justifyContent: isMobile ? "flex-start" : "space-around",
         p: isMobile ? 0 : 2,
         pt: 2,
@@ -18,8 +22,8 @@ const Overview = () => {
         width: "100%",
       }}
     >
-      <TodosWrapper heading="Pending" />
-      <TodosWrapper heading="Completed" />
+      <Todos heading="Pending" pendingTodos={pendingTodos} />
+      <Todos heading="Completed" completedTodos={completedTodos} />
     </Box>
   );
 };

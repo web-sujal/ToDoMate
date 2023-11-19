@@ -43,7 +43,6 @@ const SidebarItems = ({
             borderRight: "4px solid #283618",
           },
         }}
-        // tabIndex={currentIndex}
       >
         <ListItemIcon>
           <Icon sx={{ color: "primary.light" }} />
