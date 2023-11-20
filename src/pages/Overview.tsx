@@ -22,8 +22,16 @@ const Overview = () => {
         width: "100%",
       }}
     >
-      <Todos heading="Pending" pendingTodos={pendingTodos} />
-      <Todos heading="Completed" completedTodos={completedTodos} />
+      <Todos
+        heading="Pending"
+        pendingTodos={pendingTodos}
+        total={pendingTodos.length}
+      />
+      <Todos
+        heading="Completed"
+        completedTodos={completedTodos}
+        total={completedTodos.length}
+      />
     </Box>
   );
 };

@@ -24,6 +24,7 @@ import { useEffect, useRef, useState } from "react";
 import SidebarItems from "./SidebarItems";
 import animationData from "../assets/checklist.json";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import AddTodo from "./AddTodo";
 
 const icons = [
   HomeOutlined,
@@ -48,6 +49,7 @@ const Sidebar = () => {
   const animationRef = useRef<LottieRefCurrentProps>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -125,6 +127,7 @@ const Sidebar = () => {
         </ListItemButton>
       </List>
       <Fab
+        onClick={() => setOpen(true)}
         color="secondary"
         aria-label="add"
         sx={{
@@ -140,6 +143,7 @@ const Sidebar = () => {
       >
         <Add />
       </Fab>
+      <AddTodo open={open} setOpen={setOpen} />
     </Box>
   );
 };

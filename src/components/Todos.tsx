@@ -1,5 +1,7 @@
-import { Box, Button, List, Paper, Typography } from "@mui/material";
+import { Box, Button, Chip, List, Paper, Typography } from "@mui/material";
 import Todo from "./Todo";
+import AddTodo from "./AddTodo";
+import { useState } from "react";
 
 type Todo = {
   id: number;
@@ -12,9 +14,17 @@ type TodosProps = {
   heading: string;
   pendingTodos?: Array<Todo>;
   completedTodos?: Array<Todo>;
+  total: number;
 };
 
-const Todos = ({ heading, pendingTodos, completedTodos }: TodosProps) => {
+const Todos = ({
+  heading,
+  pendingTodos,
+  completedTodos,
+  total,
+}: TodosProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <Paper
       sx={{
@@ -42,11 +52,18 @@ const Todos = ({ heading, pendingTodos, completedTodos }: TodosProps) => {
         </Typography>
 
         {/* Counter */}
-        <Typography>2</Typography>
+        <Typography>
+          <Chip
+            label={total}
+            color={heading && heading === "Completed" ? "success" : "secondary"}
+            variant="outlined"
+          />
+        </Typography>
       </Box>
 
       {/* add button */}
       <Button
+        onClick={() => setOpen(true)}
         sx={{
           width: "100%",
           bgcolor: "primary.main",
@@ -62,6 +79,7 @@ const Todos = ({ heading, pendingTodos, completedTodos }: TodosProps) => {
       >
         +
       </Button>
+      <AddTodo open={open} setOpen={setOpen} />
 
       {/* Todos */}
       <List

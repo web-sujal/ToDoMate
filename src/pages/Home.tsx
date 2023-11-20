@@ -2,10 +2,13 @@ import { Box, Fab, useMediaQuery, useTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { Add } from "@mui/icons-material";
+import AddTodo from "../components/AddTodo";
+import { useState } from "react";
 
 const Home = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [open, setOpen] = useState(false);
 
   return (
     <Box
@@ -17,6 +20,7 @@ const Home = () => {
       <Navbar />
       <Outlet />
       <Fab
+        onClick={() => setOpen(true)}
         color="secondary"
         aria-label="add"
         sx={{
@@ -32,6 +36,7 @@ const Home = () => {
       >
         <Add />
       </Fab>
+      <AddTodo open={open} setOpen={setOpen} />
     </Box>
   );
 };

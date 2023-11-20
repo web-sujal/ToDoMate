@@ -1,12 +1,17 @@
 export const todos = [
-  { id: 1, text: "Buy groceries", completed: false, createdAt: new Date() },
+  {
+    id: 1,
+    text: "make chips for secondary todos",
+    completed: false,
+    createdAt: new Date(),
+  },
   {
     id: 2,
     text: "Create Add Todo Modal",
     completed: false,
     createdAt: new Date(),
   },
-  { id: 3, text: "Go for a run", completed: false, createdAt: new Date() },
+  { id: 3, text: "Go for a run", completed: true, createdAt: new Date() },
   {
     id: 4,
     text: "Attend meeting at 2 PM",
@@ -15,7 +20,7 @@ export const todos = [
   },
   {
     id: 5,
-    text: "Read a chapter of a book",
+    text: "firebase 🔥",
     completed: false,
     createdAt: new Date(),
   },
