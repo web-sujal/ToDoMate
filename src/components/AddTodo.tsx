@@ -1,3 +1,4 @@
+import { AddCircle } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -10,21 +11,24 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import AddTags from "./AddTags";
 
 type AddTodoProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+const tags: string[] = ["anime", "shounen", "thrill"];
+
 const AddTodo = ({ open, setOpen }: AddTodoProps) => {
+  const [isAddTagsOpen, setIsAddTagsOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Modal
       open={open}
-      // open={true}
       onClose={() => setOpen(false)}
       aria-labelledby="add-todo-modal"
     >
@@ -91,28 +95,63 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         />
 
         {/* Tags */}
-        <Stack direction="row" alignItems="center" gap={1} sx={{ mb: 2 }}>
-          <Typography>Tags:</Typography>
-          <Chip
-            label="latreen"
-            variant="outlined"
-            color="success"
-            size="small"
-            onDelete={() => console.info("just clicked from addtodo")}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={1}
+          sx={{ mb: 2 }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            gap={1}
+          >
+            <Typography>Tags:</Typography>
+            {tags.length ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                gap={1}
+              >
+                {tags.map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    variant="outlined"
+                    color="success"
+                    size="small"
+                    onDelete={() =>
+                      console.info("just clicked from addtodo modal tags")
+                    }
+                  />
+                ))}
+              </Stack>
+            ) : (
+              <Typography sx={{ color: "rgba(0,0,0,0.8)" }}>
+                (No Tags Selected)
+              </Typography>
+            )}
+          </Stack>
+
+          <AddCircle
+            onClick={() => setIsAddTagsOpen(true)}
+            sx={{
+              cursor: "pointer",
+              color: "primary.main",
+              "&:hover": {
+                transform: "translateY(-3px) scale(1.05)",
+                transition: "transform 0.3s",
+              },
+            }}
           />
-          <Chip
-            label="tatti"
-            variant="outlined"
-            color="success"
-            size="small"
-            onDelete={() => console.info("just clicked from addtodo")}
-          />
-          <Chip
-            label="pesaap"
-            variant="outlined"
-            color="success"
-            size="small"
-            onDelete={() => console.info("just clicked from addtodo")}
+
+          {/* tags modal */}
+          <AddTags
+            isAddTagsOpen={isAddTagsOpen}
+            setIsAddTagsOpen={setIsAddTagsOpen}
           />
         </Stack>
 
