@@ -21,7 +21,7 @@ const Home = () => {
       <Outlet />
       <Fab
         onClick={() => setOpen(true)}
-        color="secondary"
+        color="primary"
         aria-label="add"
         sx={{
           position: "fixed",
@@ -30,7 +30,7 @@ const Home = () => {
           transform: "translateX(-50%)",
           display: isMobile ? "" : "none",
           "&:hover": {
-            bgcolor: "secondary.light",
+            bgcolor: "primary.light",
           },
         }}
       >

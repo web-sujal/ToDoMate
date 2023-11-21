@@ -63,7 +63,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           sx={{
             mb: 2,
             border: "1px solid",
-            borderColor: "primary.main",
+            borderColor: "secondary.contrastText",
             borderRadius: 1,
             px: 1,
           }}
@@ -80,7 +80,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           sx={{
             mb: 2,
             border: "1px solid",
-            borderColor: "primary.main",
+            borderColor: "secondary.contrastText",
             borderRadius: 1,
             px: 1,
             py: 0.5,
@@ -90,7 +90,6 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           rows={3}
           placeholder="enter description..."
           fullWidth
-          required
           name="todo"
         />
 
@@ -140,7 +139,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
             onClick={() => setIsAddTagsOpen(true)}
             sx={{
               cursor: "pointer",
-              color: "primary.main",
+              color: "secondary.contrastText",
               "&:hover": {
                 transform: "translateY(-3px) scale(1.05)",
                 transition: "transform 0.3s",
@@ -157,7 +156,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
 
         <ButtonGroup
           variant="outlined"
-          color="secondary"
+          color="primary"
           aria-label="add todo button"
           fullWidth
           sx={{ mb: 2 }}
@@ -165,7 +164,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           <Button>Add</Button>
           <Button
             onClick={() => setOpen(false)}
-            sx={{ maxWidth: "100px", color: "red" }}
+            sx={{ maxWidth: "100px", color: "error" }}
           >
             Cancel
           </Button>

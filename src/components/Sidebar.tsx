@@ -73,6 +73,7 @@ const Sidebar = () => {
         maxWidth: 280,
         bgcolor: "background.default",
         minHeight: "100vh",
+        // color: "white",
       }}
     >
       <Box
@@ -98,7 +99,7 @@ const Sidebar = () => {
             fontWeight: "800",
             fontSize: "30px",
             pt: 1,
-            color: "#283618",
+            color: "#121212",
           }}
         >
           ToDoMate
@@ -128,7 +129,7 @@ const Sidebar = () => {
       </List>
       <Fab
         onClick={() => setOpen(true)}
-        color="secondary"
+        color="primary"
         aria-label="add"
         sx={{
           position: "fixed",
@@ -137,7 +138,7 @@ const Sidebar = () => {
           transform: "translateX(-50%)",
           display: isMobile ? "none" : "",
           "&:hover": {
-            bgcolor: "secondary.light",
+            bgcolor: "primary.light",
           },
         }}
       >

@@ -7,6 +7,7 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 
@@ -37,9 +38,8 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           height: 200,
           bgcolor: "white",
           borderTop: "5px solid",
-          borderTopColor: "secondary.main",
+          borderTopColor: "secondary.contrastText",
           boxShadow: 24,
-
           p: 4,
         }}
       >
@@ -48,10 +48,11 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           variant="h6"
           component="h2"
           color="primary"
-          sx={{ mb: 2, fontSize: "24px", fontWeight: "bold" }}
+          sx={{ mb: 1, fontSize: "24px", fontWeight: "bold" }}
         >
           Tags
         </Typography>
+        <Divider />
 
         {/* tags */}
         <Stack
@@ -59,6 +60,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           alignItems="center"
           justifyContent="start"
           gap={1}
+          mt={2}
           mb={2}
         >
           {tags.map((tag) => (
@@ -82,7 +84,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           justifyContent="space-between"
           gap={1}
         >
-          <Button size="small" variant="outlined" color="primary">
+          <Button size="small" variant="outlined" color="info">
             New
           </Button>
           <Stack
@@ -99,7 +101,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
             >
               Cancel
             </Button>
-            <Button size="small" variant="outlined" color="primary">
+            <Button size="small" variant="outlined" color="success">
               Save
             </Button>
           </Stack>

@@ -46,7 +46,7 @@ const Todo = ({ text, completed }: TodoProps) => {
         <Checkbox
           edge="start"
           checked={checked}
-          color="secondary"
+          color="primary"
           onClick={() => setChecked(!checked)}
         />
 

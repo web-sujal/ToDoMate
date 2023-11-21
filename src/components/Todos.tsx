@@ -55,7 +55,7 @@ const Todos = ({
         <Typography>
           <Chip
             label={total}
-            color={heading && heading === "Completed" ? "success" : "secondary"}
+            color={heading && heading === "Completed" ? "success" : "primary"}
             variant="outlined"
           />
         </Typography>
