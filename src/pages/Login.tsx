@@ -33,18 +33,26 @@ const Login = () => {
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-
       navigate("/overview");
     } catch (err) {
       if ((err as FirebaseError).code === "auth/invalid-login-credentials") {
         try {
           await createUserWithEmailAndPassword(auth, email, password);
-
           navigate("/overview");
         } catch (err) {
           console.error(err);
         }
       }
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      console.log(auth.currentUser);
+      navigate("/overview");
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -136,6 +144,7 @@ const Login = () => {
         <Typography sx={{ color: "rgba(0, 0, 0, 0.6)", mb: 1 }}>OR</Typography>
 
         <Button
+          onClick={signInWithGoogle}
           variant="contained"
           startIcon={<Google />}
           sx={{

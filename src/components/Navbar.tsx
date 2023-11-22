@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
+  Typography,
   styled,
   useMediaQuery,
   useTheme,
@@ -40,6 +41,7 @@ const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+  const user = auth.currentUser;
 
   const handleClick = () => {
     console.log("searched task: ", searchedTask);
@@ -152,21 +154,19 @@ const Navbar = () => {
               <Mail sx={{ color: "white" }} />
             </StyledBadge>
             <Avatar
-              alt="Sujal Rajput"
-              src="/assets/sujal-pfp.jpeg"
+              alt="profile-pic"
+              src={user?.photoURL || "profile-pic-url"}
               onClick={() => setIsMenuOpen(true)}
               sx={{
                 backgroundColor: "white",
                 objectFit: "cover",
-                color: "black",
+                color: theme.palette.secondary.contrastText,
                 "&:hover": {
                   transform: "translateY(-3px) scale(1.05)",
                   transition: "transform 0.3s",
                 },
               }}
-            >
-              S
-            </Avatar>
+            />
 
             {/* menu */}
             <Menu
@@ -189,10 +189,14 @@ const Navbar = () => {
               <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
                 <Avatar
                   alt="profile-pic"
-                  src="/assets/sujal-pfp.jpeg"
-                  sx={{ objectFit: "cover" }}
+                  src={user?.photoURL || "profile-pic-url"}
+                  sx={{
+                    backgroundColor: theme.palette.secondary.contrastText,
+                    color: "white",
+                    objectFit: "cover",
+                  }}
                 />
-                Profile
+                {user ? user?.displayName : <Typography>Profile</Typography>}
               </MenuItem>
               <MenuItem onClick={handleSignOut} sx={{ gap: 2 }}>
                 <ListItemIcon>
