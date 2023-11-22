@@ -21,6 +21,9 @@ import {
 } from "@mui/icons-material";
 import InputField from "./InputField";
 import Sidebar from "./Sidebar";
+import { auth } from "../config/firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)({
   "&:hover": {
@@ -36,9 +39,20 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   const handleClick = () => {
     console.log("searched task: ", searchedTask);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setIsMenuOpen(false);
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -180,7 +194,7 @@ const Navbar = () => {
                 />
                 Profile
               </MenuItem>
-              <MenuItem onClick={() => setIsMenuOpen(false)} sx={{ gap: 2 }}>
+              <MenuItem onClick={handleSignOut} sx={{ gap: 2 }}>
                 <ListItemIcon>
                   <Logout sx={{ ml: 1 }} fontSize="small" />
                 </ListItemIcon>

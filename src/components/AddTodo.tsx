@@ -71,7 +71,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           placeholder="enter title..."
           fullWidth
           required
-          name="todo"
+          name="todo-title"
         />
 
         {/* description */}
@@ -90,7 +90,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           rows={3}
           placeholder="enter description..."
           fullWidth
-          name="todo"
+          name="todo-description"
         />
 
         {/* Tags */}

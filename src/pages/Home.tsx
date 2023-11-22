@@ -4,38 +4,45 @@ import Navbar from "../components/Navbar";
 import { Add } from "@mui/icons-material";
 import AddTodo from "../components/AddTodo";
 import { useState } from "react";
+import { auth } from "../config/firebase";
 
 const Home = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
+  const user = auth.currentUser;
 
   return (
     <Box
       flex={4}
       width={"100%"}
       bgcolor="background.paper"
-      sx={{ minHeight: "100vh" }}
+      sx={{ minHeight: "100vh", position: "relative" }}
     >
       <Navbar />
       <Outlet />
-      <Fab
-        onClick={() => setOpen(true)}
-        color="primary"
-        aria-label="add"
-        sx={{
-          position: "fixed",
-          bottom: "25px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: isMobile ? "" : "none",
-          "&:hover": {
-            bgcolor: "primary.light",
-          },
-        }}
-      >
-        <Add />
-      </Fab>
+
+      {user ? (
+        <Fab
+          onClick={() => setOpen(true)}
+          color="primary"
+          aria-label="add"
+          sx={{
+            position: "fixed",
+            bottom: "25px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: isMobile ? "" : "none",
+            "&:hover": {
+              bgcolor: "primary.light",
+            },
+          }}
+        >
+          <Add />
+        </Fab>
+      ) : (
+        ""
+      )}
       <AddTodo open={open} setOpen={setOpen} />
     </Box>
   );
