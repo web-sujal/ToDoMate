@@ -6,6 +6,7 @@ import { useState } from "react";
 type Todo = {
   id: number;
   text: string;
+  tags: string[];
   completed: boolean;
   createdAt: Date;
 };
@@ -79,6 +80,8 @@ const Todos = ({
       >
         +
       </Button>
+
+      {/* Add todo modal */}
       <AddTodo open={open} setOpen={setOpen} />
 
       {/* Todos */}
@@ -96,10 +99,17 @@ const Todos = ({
         }}
       >
         {pendingTodos &&
-          pendingTodos.map((todo) => <Todo text={todo.text} key={todo.id} />)}
+          pendingTodos.map((todo) => (
+            <Todo text={todo.text} key={todo.id} tags={todo.tags} />
+          ))}
         {completedTodos &&
           completedTodos.map((todo) => (
-            <Todo text={todo.text} key={todo.id} completed={todo.completed} />
+            <Todo
+              text={todo.text}
+              key={todo.id}
+              completed={todo.completed}
+              tags={todo.tags}
+            />
           ))}
       </List>
     </Paper>

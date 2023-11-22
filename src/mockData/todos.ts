@@ -2,12 +2,14 @@ export const todos = [
   {
     id: 1,
     text: "make chips for secondary todos",
+    tags: ["anime", "shounen", "action"],
     completed: false,
     createdAt: new Date(),
   },
   {
     id: 2,
     text: "Create Add Todo Modal",
+    tags: ["crime", "drama"],
     completed: false,
     createdAt: new Date(),
   },
@@ -15,15 +17,29 @@ export const todos = [
   {
     id: 4,
     text: "Attend meeting at 2 PM",
+    tags: ["romance", "comedy", "adventure"],
     completed: true,
     createdAt: new Date(),
   },
   {
     id: 5,
     text: "firebase 🔥",
+    tags: ["anime"],
     completed: false,
     createdAt: new Date(),
   },
-  { id: 6, text: "Call a friend", completed: true, createdAt: new Date() },
-  { id: 6, text: "Integrate Backend", completed: false, createdAt: new Date() },
+  {
+    id: 6,
+    text: "Call a friend",
+    tags: ["romance", "comedy"],
+    completed: true,
+    createdAt: new Date(),
+  },
+  {
+    id: 7,
+    text: "Integrate Backend",
+    tags: ["crime", "drama", "thrill"],
+    completed: false,
+    createdAt: new Date(),
+  },
 ];
