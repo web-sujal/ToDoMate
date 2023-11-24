@@ -10,7 +10,14 @@ import {
   Divider,
 } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  Unsubscribe,
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db, auth } from "../config/firebase";
 import CreateTag from "./CreateTag";
 
@@ -19,40 +26,61 @@ type AddTodoProps = {
   setIsAddTagsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const tags: string[] = [
-  "anime",
-  "shounen",
-  "thrill",
-  "anime",
-  "shounen",
-  "thrill",
-  "anime",
-  "shounen",
-  "thrill",
-];
+type Tags = {
+  name?: string;
+  id: string;
+};
 
 const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
+  const [tags, setTags] = useState<Tags[]>([]);
 
   //firebase
   const user = auth.currentUser;
-  const todosRef = collection(db, "todos");
 
-  // useEffect(() => {
-  //   const querySnapshot = async () => {
-  //     (await getDocs(todosRef)).forEach((doc) => {
-  //       console.log(doc.id, " => ", doc.data());
-  //     });
-  //   };
+  // adding tag to tags subcollection
+  useEffect(() => {
+    const fetchTags = async () => {
+      if (user) {
+        const tagsCollection = collection(db, "users", user.uid, "tags");
+        const q = query(tagsCollection, orderBy("name"));
 
-  //   querySnapshot();
-  // }, []);
+        const tagsData = await getDocs(q);
+        const tagsArray = tagsData.docs.map((tag) => ({
+          ...tag.data(),
+          id: tag.id,
+        }));
+        setTags(tagsArray);
+      }
+    };
 
-  // useEffect(() => {
-  //   const fetchTodos = async () => {};
-  // }, []);
+    fetchTags();
+  }, []);
+
+  // subscribing to firestore
+  useEffect(() => {
+    let unsubscribe: Unsubscribe;
+
+    if (user) {
+      const tagsCollection = collection(db, "users", user.uid, "tags");
+      const q = query(tagsCollection, orderBy("name"));
+      unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const tagsArray = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setTags(tagsArray);
+      });
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   return (
     <Modal
@@ -75,7 +103,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           p: 4,
         }}
       >
-        {/* heading */}
+        {/* heading : TAGS */}
         <Typography
           variant="h6"
           component="h2"
@@ -96,10 +124,10 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           mt={2}
           mb={4}
         >
-          {tags.map((tag, index) => (
+          {tags.map((tag) => (
             <Chip
-              key={index}
-              label={tag}
+              key={tag.id}
+              label={tag.name}
               variant="outlined"
               color="warning"
               size="small"
