@@ -40,9 +40,6 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
   const user = auth.currentUser;
   const todosRef = collection(db, "todos");
 
-  console.log("user: ", user);
-  console.log("user uid: ", user?.uid);
-
   // useEffect(() => {
   //   const querySnapshot = async () => {
   //     (await getDocs(todosRef)).forEach((doc) => {

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { auth, db } from "../config/firebase";
-import { collection, addDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 type CreateTagProps = {
   isCreateTagOpen: boolean;
@@ -29,6 +29,7 @@ const CreateTag = ({ isCreateTagOpen, setIsCreateTagOpen }: CreateTagProps) => {
 
   // event handlers
   const handleClick = async () => {
+    // tag input validation
     if (tag.trim() === "") {
       setShowError(true);
       return;
@@ -39,18 +40,19 @@ const CreateTag = ({ isCreateTagOpen, setIsCreateTagOpen }: CreateTagProps) => {
       return;
     }
 
-    try {
-      // const parentRef = collection(db, "users", user.uid, "tags");
-      // const newSubDocRef = collection(parentDocRef, "tags");
+    // creating tag into tags subcollection
+    if (user) {
+      try {
+        const tagsCollection = collection(db, "users", user.uid, "tags");
+        const docRef = await addDoc(tagsCollection, {
+          name: tag.trim().toLowerCase(),
+        });
 
-      const docRef = await addDoc(collection(db, "users"), {
-        name: tag.trim().toLowerCase(),
-      });
-
-      setTag("");
-      console.log("Document written with ID: ", docRef.id);
-    } catch (err) {
-      console.error(err);
+        setTag("");
+        console.log("Document written with ID: ", docRef.id);
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     setIsCreateTagOpen(false);
