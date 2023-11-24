@@ -15,6 +15,7 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import AddTags from "./AddTags";
 import { db } from "../config/firebase";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 type AddTodoProps = {
   open: boolean;
@@ -24,6 +25,7 @@ type AddTodoProps = {
 const AddTodo = ({ open, setOpen }: AddTodoProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { register, handleSubmit } = useForm();
 
   // states
   const [isAddTagsOpen, setIsAddTagsOpen] = useState(false);
@@ -32,7 +34,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
   const [tags, setTags] = useState<string[]>([]);
 
   // event handlers
-  const handleSubmit = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
@@ -84,7 +86,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           Add Todo
         </Typography>
 
-        <form action="#" onSubmit={handleSubmit}>
+        <form action="#" onSubmit={handleSubmit(onSubmit)}>
           {/* title */}
           <Typography sx={{ mb: 1 }}>Title</Typography>
           <Input

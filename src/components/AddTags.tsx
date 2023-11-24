@@ -9,18 +9,53 @@ import {
   useMediaQuery,
   Divider,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from "../config/firebase";
+import CreateTag from "./CreateTag";
 
 type AddTodoProps = {
   isAddTagsOpen: boolean;
   setIsAddTagsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const tags: string[] = ["anime", "shounen", "thrill"];
+const tags: string[] = [
+  "anime",
+  "shounen",
+  "thrill",
+  "anime",
+  "shounen",
+  "thrill",
+  "anime",
+  "shounen",
+  "thrill",
+];
 
 const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
+
+  //firebase
+  const user = auth.currentUser;
+  const todosRef = collection(db, "todos");
+
+  console.log("user: ", user);
+  console.log("user uid: ", user?.uid);
+
+  // useEffect(() => {
+  //   const querySnapshot = async () => {
+  //     (await getDocs(todosRef)).forEach((doc) => {
+  //       console.log(doc.id, " => ", doc.data());
+  //     });
+  //   };
+
+  //   querySnapshot();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchTodos = async () => {};
+  // }, []);
 
   return (
     <Modal
@@ -35,7 +70,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           width: isMobile ? "90vw" : 580,
-          height: 200,
+          // height: 200,
           bgcolor: "white",
           borderTop: "5px solid",
           borderTopColor: "secondary.contrastText",
@@ -48,7 +83,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           variant="h6"
           component="h2"
           color="primary"
-          sx={{ mb: 1, fontSize: "24px", fontWeight: "bold" }}
+          sx={{ mb: 3, fontSize: "24px", fontWeight: "bold" }}
         >
           Tags
         </Typography>
@@ -59,13 +94,14 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           direction="row"
           alignItems="center"
           justifyContent="start"
+          flexWrap="wrap"
           gap={1}
           mt={2}
-          mb={2}
+          mb={4}
         >
-          {tags.map((tag) => (
+          {tags.map((tag, index) => (
             <Chip
-              key={tag}
+              key={index}
               label={tag}
               variant="outlined"
               color="warning"
@@ -84,7 +120,12 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           justifyContent="space-between"
           gap={1}
         >
-          <Button size="small" variant="outlined" color="info">
+          <Button
+            onClick={() => setIsCreateTagOpen(true)}
+            size="small"
+            variant="outlined"
+            color="info"
+          >
             New
           </Button>
           <Stack
@@ -105,6 +146,12 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
               Save
             </Button>
           </Stack>
+
+          {/* CreateTag Modal */}
+          <CreateTag
+            isCreateTagOpen={isCreateTagOpen}
+            setIsCreateTagOpen={setIsCreateTagOpen}
+          />
         </Stack>
       </Box>
     </Modal>

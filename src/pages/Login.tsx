@@ -9,16 +9,15 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-
-// firebase imports
-import { auth, googleProvider } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
+import { db, auth, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 
 const Login = () => {
   const theme = useTheme();
@@ -32,12 +31,30 @@ const Login = () => {
   // event handlers
   const signIn = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      const user = res.user;
+
+      // setting user document in firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+      });
+
       navigate("/overview");
     } catch (err) {
       if ((err as FirebaseError).code === "auth/invalid-login-credentials") {
         try {
-          await createUserWithEmailAndPassword(auth, email, password);
+          const res = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = res.user;
+
+          // setting user document in firestore
+          await setDoc(doc(db, "users", user.uid), {
+            name: user.displayName,
+          });
+
           navigate("/overview");
         } catch (err) {
           console.error(err);
@@ -48,8 +65,14 @@ const Login = () => {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      console.log(auth.currentUser);
+      const res = await signInWithPopup(auth, googleProvider);
+      const user = res.user;
+
+      // setting user document in firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+      });
+
       navigate("/overview");
     } catch (err) {
       console.error(err);

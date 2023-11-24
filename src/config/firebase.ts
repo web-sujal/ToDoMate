@@ -18,12 +18,35 @@ export const db = getFirestore(app);
 
 {
   /*
+  users (collection) : {
+    uniqueID (auto generated) : {
+      name ( a field for users collection, i doubt if it's necessary ),
+        todos (subcollection) : {
+          uniqueID (auto generated) : {
+            title: string,
+            description: string,
+            tags: string[],
+            createdAt: Date,
+            isCompleted: boolean,
+          }
+        }
+
+        tags (subcollection) : {
+          uniqueID (auto generated) : {
+            name: string,
+          }
+        }
+    }
+  }
+  */
+  /*
     public
     src
       assets
       components
         Addtags.tsx
         AddTodo.tsx
+        CreateTag.tsx
         InputField.tsx
         Navbar.tsx
         Sidebar.tsx
