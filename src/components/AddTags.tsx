@@ -86,11 +86,7 @@ const AddTags = ({
       });
     }
 
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
+    return () => unsubscribe();
   }, []);
 
   // event handlers

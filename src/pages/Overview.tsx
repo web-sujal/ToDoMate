@@ -1,6 +1,5 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import Todos from "../components/Todos";
-// import { todos } from "../mockData/todos";
 import { useEffect, useState } from "react";
 import {
   collection,
@@ -49,7 +48,7 @@ const Overview = () => {
             tagNames.push(tagName);
           }
 
-          todo = { ...todo, tags: tagNames };
+          todo = { ...todo, tags: tagNames, id: element.id };
           todosArray.push(todo);
         }
         setTodos(todosArray);
@@ -83,7 +82,7 @@ const Overview = () => {
             tagNames.push(tagName);
           }
 
-          todo = { ...todo, tags: tagNames };
+          todo = { ...todo, tags: tagNames, id: element.id };
           todosArray.push(todo);
         }
 
