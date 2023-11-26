@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout";
 import Overview from "../pages/Overview";
-import ErrorPage from "../pages/ErrorPage";
+// import ErrorPage from "../pages/ErrorPage";
 import Settings from "../pages/Settings";
 import Today from "../pages/Today";
 import About from "../pages/About";

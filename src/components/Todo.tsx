@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import Tag from "./Tag";
 import { db, auth } from "../config/firebase";
-import { FieldValue, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 type TodoProps = {
   title: string;
@@ -82,9 +82,7 @@ const Todo = ({ title, completed, tags, id }: TodoProps) => {
           secondary={
             <Stack direction="row" gap={1}>
               {tags &&
-                tags.map((tag, index) => (
-                  <Tag key={index} label={tag} currentTag={tag} tags={tags} />
-                ))}
+                tags.map((tag, index) => <Tag key={index} label={tag} />)}
             </Stack>
           }
         />

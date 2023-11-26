@@ -2,8 +2,6 @@ import { Chip } from "@mui/material";
 
 type TagProps = {
   label: string;
-  currentTag: string;
-  tags: string[];
 };
 
 const Tag = ({ label }: TagProps) => {
