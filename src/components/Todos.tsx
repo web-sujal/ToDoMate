@@ -4,8 +4,9 @@ import AddTodo from "./AddTodo";
 import { useState } from "react";
 
 type Todo = {
-  id: number;
-  text: string;
+  id: string;
+  title: string;
+  description: string;
   tags: string[];
   completed: boolean;
   createdAt: Date;
