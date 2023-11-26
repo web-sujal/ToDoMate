@@ -37,7 +37,3 @@ const Overview = () => {
 };
 
 export default Overview;
-
-// https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
-
-// https://stackoverflow.com/questions/72082115/how-do-i-get-the-document-id-of-a-specific-document-in-firebase-on-react-native

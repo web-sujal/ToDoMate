@@ -27,6 +27,8 @@ type AddTodoProps = {
   isAddTagsOpen: boolean;
   setIsAddTagsOpen: Dispatch<SetStateAction<boolean>>;
   setInitialTags: Dispatch<SetStateAction<string[]>>;
+  selectedTags: string[];
+  setSelectedTags: Dispatch<SetStateAction<string[]>>;
 };
 
 type Tags = {
@@ -38,12 +40,13 @@ const AddTags = ({
   isAddTagsOpen,
   setIsAddTagsOpen,
   setInitialTags,
+  selectedTags,
+  setSelectedTags,
 }: AddTodoProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
   const [tags, setTags] = useState<Tags[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   //firebase
   const user = auth.currentUser;
@@ -91,6 +94,7 @@ const AddTags = ({
   }, []);
 
   // event handlers
+  // selecting tags
   const handleClick = (id: string) => {
     let tags = [...selectedTags];
 
@@ -203,7 +207,10 @@ const AddTags = ({
               size="small"
               variant="outlined"
               color="error"
-              onClick={() => setIsAddTagsOpen(false)}
+              onClick={() => {
+                setIsAddTagsOpen(false);
+                setSelectedTags([]);
+              }}
             >
               Cancel
             </Button>

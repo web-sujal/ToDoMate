@@ -38,6 +38,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<DocumentData>([]);
   const [initialTags, setInitialTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // firebase
   const user = auth.currentUser;
@@ -66,22 +67,29 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
     fetchTags();
   }, [initialTags]);
 
+  // event handlers
   const handleClick = async () => {
-    try {
-      await addDoc(collection(db, "todos"), {
-        title,
-        description,
-        tags,
-        isCompleted: false,
-        createdAt: Timestamp.now(),
-      });
+    if (user) {
+      try {
+        const todosRef = collection(db, "users", user.uid, "todos");
+        await addDoc(todosRef, {
+          title,
+          description,
+          initialTags,
+          isCompleted: false,
+          createdAt: Timestamp.now(),
+        });
 
-      setTitle("");
-      setDescription("");
-      setTags([]);
-      console.log("updated one record!");
-    } catch (err) {
-      console.error(err);
+        setTitle("");
+        setDescription("");
+        setTags([]);
+        setInitialTags([]);
+        setSelectedTags([]);
+        setIsAddTagsOpen(false);
+        console.log("updated one record!");
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -213,6 +221,8 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
             isAddTagsOpen={isAddTagsOpen}
             setIsAddTagsOpen={setIsAddTagsOpen}
             setInitialTags={setInitialTags}
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
           />
         </Stack>
 

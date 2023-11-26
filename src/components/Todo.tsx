@@ -13,14 +13,17 @@ import { useState } from "react";
 import Tag from "./Tag";
 
 type TodoProps = {
-  text: string;
+  title: string;
   completed?: boolean;
   tags: string[];
 };
 
-const Todo = ({ text, completed, tags }: TodoProps) => {
+const Todo = ({ title, completed, tags }: TodoProps) => {
   const [checked, setChecked] = useState(completed || false);
-  const todo = text.length <= 24 ? text : text.substring(0, 24) + "...";
+  const todo =
+    title && title.length <= 24
+      ? title
+      : title && title.substring(0, 24) + "...";
 
   return (
     <Box>

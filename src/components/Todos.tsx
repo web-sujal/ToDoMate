@@ -101,12 +101,12 @@ const Todos = ({
       >
         {pendingTodos &&
           pendingTodos.map((todo) => (
-            <Todo text={todo.text} key={todo.id} tags={todo.tags} />
+            <Todo title={todo.title} key={todo.id} tags={todo.tags} />
           ))}
         {completedTodos &&
           completedTodos.map((todo) => (
             <Todo
-              text={todo.text}
+              title={todo.title}
               key={todo.id}
               completed={todo.completed}
               tags={todo.tags}
