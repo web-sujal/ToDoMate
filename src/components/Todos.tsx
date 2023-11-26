@@ -2,20 +2,12 @@ import { Box, Button, Chip, List, Paper, Typography } from "@mui/material";
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 import { useState } from "react";
-
-type Todo = {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  completed: boolean;
-  createdAt: Date;
-};
+import { TodoType } from "../types";
 
 type TodosProps = {
   heading: string;
-  pendingTodos?: Array<Todo>;
-  completedTodos?: Array<Todo>;
+  pendingTodos?: Array<TodoType>;
+  completedTodos?: Array<TodoType>;
   total: number;
 };
 
@@ -108,7 +100,7 @@ const Todos = ({
             <Todo
               title={todo.title}
               key={todo.id}
-              completed={todo.completed}
+              completed={todo.isCompleted}
               tags={todo.tags}
             />
           ))}

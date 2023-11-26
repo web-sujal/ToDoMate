@@ -50,6 +50,7 @@ const Todo = ({ title, completed, tags }: TodoProps) => {
                 textDecoration: checked ? "line-through" : "none",
                 transform: "translateY(4px)",
                 fontSize: "large",
+                cursor: "pointer",
               }}
             >
               {todo}

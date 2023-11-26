@@ -75,7 +75,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         await addDoc(todosRef, {
           title,
           description,
-          initialTags,
+          tags: initialTags,
           isCompleted: false,
           createdAt: Timestamp.now(),
         });
