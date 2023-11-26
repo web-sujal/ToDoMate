@@ -11,10 +11,17 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import AddTags from "./AddTags";
-import { db } from "../config/firebase";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db, auth } from "../config/firebase";
+import {
+  DocumentData,
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 type AddTodoProps = {
   open: boolean;
@@ -29,9 +36,36 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
   const [isAddTagsOpen, setIsAddTagsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<DocumentData>([]);
+  const [initialTags, setInitialTags] = useState<string[]>([]);
 
-  // event handlers
+  // firebase
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      let fetchedTags: DocumentData = [];
+
+      if (user) {
+        try {
+          for (const tagId of initialTags) {
+            const docRef = doc(db, "users", user.uid, "tags", tagId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+              fetchedTags.push(docSnap.data());
+            }
+          }
+          setTags(fetchedTags);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    };
+
+    fetchTags();
+  }, [initialTags]);
+
   const handleClick = async () => {
     try {
       await addDoc(collection(db, "todos"), {
@@ -145,16 +179,13 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
                 justifyContent="space-between"
                 gap={1}
               >
-                {tags.map((tag) => (
+                {tags.map((tag: DocumentData) => (
                   <Chip
-                    key={tag}
-                    label={tag}
+                    key={tag.name}
+                    label={tag.name}
                     variant="outlined"
                     color="success"
                     size="small"
-                    onDelete={() =>
-                      console.info("just clicked from addtodo modal tags")
-                    }
                   />
                 ))}
               </Stack>
@@ -181,6 +212,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           <AddTags
             isAddTagsOpen={isAddTagsOpen}
             setIsAddTagsOpen={setIsAddTagsOpen}
+            setInitialTags={setInitialTags}
           />
         </Stack>
 
@@ -194,7 +226,10 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         >
           <Button onClick={handleClick}>Add</Button>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              setInitialTags([]);
+            }}
             sx={{ maxWidth: "100px", color: "error" }}
           >
             Cancel

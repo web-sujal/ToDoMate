@@ -26,6 +26,7 @@ import CreateTag from "./CreateTag";
 type AddTodoProps = {
   isAddTagsOpen: boolean;
   setIsAddTagsOpen: Dispatch<SetStateAction<boolean>>;
+  setInitialTags: Dispatch<SetStateAction<string[]>>;
 };
 
 type Tags = {
@@ -33,7 +34,11 @@ type Tags = {
   id: string;
 };
 
-const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
+const AddTags = ({
+  isAddTagsOpen,
+  setIsAddTagsOpen,
+  setInitialTags,
+}: AddTodoProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
@@ -106,6 +111,11 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
     setSelectedTags(tags);
   };
 
+  const handleSave = () => {
+    setInitialTags(selectedTags);
+    setIsAddTagsOpen(false);
+  };
+
   const handleDelete = async (id: string) => {
     if (user) {
       const docRef = doc(db, "users", user.uid, "tags", id);
@@ -134,7 +144,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
           p: 4,
         }}
       >
-        {/* heading : TAGS */}
+        {/* heading */}
         <Typography
           variant="h6"
           component="h2"
@@ -197,7 +207,12 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
             >
               Cancel
             </Button>
-            <Button size="small" variant="outlined" color="success">
+            <Button
+              size="small"
+              variant="outlined"
+              color="success"
+              onClick={handleSave}
+            >
               Save
             </Button>
           </Stack>
