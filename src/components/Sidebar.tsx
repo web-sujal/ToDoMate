@@ -45,11 +45,12 @@ const listItemText = [
 ];
 
 const Sidebar = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const animationRef = useRef<LottieRefCurrentProps>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [open, setOpen] = useState(false);
+  const animationRef = useRef<LottieRefCurrentProps>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,7 +74,6 @@ const Sidebar = () => {
         maxWidth: 280,
         bgcolor: "background.default",
         minHeight: "100vh",
-        // color: "white",
       }}
     >
       <Box

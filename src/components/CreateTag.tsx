@@ -44,12 +44,11 @@ const CreateTag = ({ isCreateTagOpen, setIsCreateTagOpen }: CreateTagProps) => {
     if (user) {
       try {
         const tagsCollection = collection(db, "users", user.uid, "tags");
-        const docRef = await addDoc(tagsCollection, {
+        await addDoc(tagsCollection, {
           name: tag.trim().toLowerCase(),
         });
 
         setTag("");
-        console.log("Document written with ID: ", docRef.id);
       } catch (err) {
         console.error(err);
       }
@@ -61,7 +60,7 @@ const CreateTag = ({ isCreateTagOpen, setIsCreateTagOpen }: CreateTagProps) => {
   return (
     <Modal
       open={isCreateTagOpen}
-      // onClose={() => setCreateTagOpen(false)}
+      onClose={() => setIsCreateTagOpen(false)}
       aria-labelledby="create-tag-modal"
     >
       <Box

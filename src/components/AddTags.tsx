@@ -13,6 +13,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Unsubscribe,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   onSnapshot,
   orderBy,
@@ -36,11 +38,12 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isCreateTagOpen, setIsCreateTagOpen] = useState(false);
   const [tags, setTags] = useState<Tags[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   //firebase
   const user = auth.currentUser;
 
-  // adding tag to tags subcollection
+  // fetching tags
   useEffect(() => {
     const fetchTags = async () => {
       if (user) {
@@ -82,6 +85,34 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
     };
   }, []);
 
+  // event handlers
+  const handleClick = (id: string) => {
+    let tags = [...selectedTags];
+
+    if (tags.includes(id)) {
+      if (tags.length === 1) {
+        tags = [];
+      } else {
+        tags = tags.filter((tagId) => tagId !== id);
+      }
+      return setSelectedTags(tags);
+    }
+
+    if (tags.length > 2) {
+      return alert("cannot select more than 3 tags");
+    }
+
+    tags.push(id);
+    setSelectedTags(tags);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (user) {
+      const docRef = doc(db, "users", user.uid, "tags", id);
+      await deleteDoc(docRef);
+    }
+  };
+
   return (
     <Modal
       open={isAddTagsOpen}
@@ -107,7 +138,7 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
         <Typography
           variant="h6"
           component="h2"
-          color="primary"
+          color="secondary.contrastText"
           sx={{ mb: 3, fontSize: "24px", fontWeight: "bold" }}
         >
           Tags
@@ -128,12 +159,11 @@ const AddTags = ({ isAddTagsOpen, setIsAddTagsOpen }: AddTodoProps) => {
             <Chip
               key={tag.id}
               label={tag.name}
-              variant="outlined"
-              color="warning"
+              variant={selectedTags.includes(tag.id) ? "filled" : "outlined"}
+              color="primary"
               size="small"
-              onClick={() =>
-                console.info("Onclick just clicked from addtodo modal tags")
-              }
+              onClick={() => handleClick(tag.id)}
+              onDelete={() => handleDelete(tag.id)}
             />
           ))}
         </Stack>
