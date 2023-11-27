@@ -12,10 +12,13 @@ const PrivateRoutes = () => {
   useEffect(() => {
     const unsubscribe = () => {
       auth.onAuthStateChanged((user) => {
+        console.log("Auth state changed");
         if (user) {
           setUser(user);
+          console.log("Navigating to /overview");
           navigate("/overview");
         } else {
+          console.log("Navigating to /login");
           navigate("/login");
         }
       });
