@@ -13,16 +13,19 @@ import { useState } from "react";
 import Tag from "./Tag";
 import { db, auth } from "../config/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import TodoDetails from "./TodoDetails";
 
 type TodoProps = {
   title: string;
-  completed?: boolean;
+  description: string;
+  isCompleted?: boolean;
   tags: string[];
   id: string;
 };
 
-const Todo = ({ title, completed, tags, id }: TodoProps) => {
-  const [checked, setChecked] = useState(completed || false);
+const Todo = ({ title, description, isCompleted, tags, id }: TodoProps) => {
+  const [checked, setChecked] = useState(isCompleted || false);
+  const [isTodoDetailsOpen, setIsTodoDetailsOpen] = useState(false);
   const todo =
     title && title.length <= 24
       ? title
@@ -67,6 +70,7 @@ const Todo = ({ title, completed, tags, id }: TodoProps) => {
         />
 
         <ListItemText
+          onClick={() => setIsTodoDetailsOpen(true)}
           primary={
             <Typography
               sx={{
@@ -87,6 +91,17 @@ const Todo = ({ title, completed, tags, id }: TodoProps) => {
           }
         />
       </ListItem>
+
+      {/* todo details modal */}
+      <TodoDetails
+        isTodoDetailsOpen={isTodoDetailsOpen}
+        setIsTodoDetailsOpen={setIsTodoDetailsOpen}
+        title={title}
+        description={description}
+        tags={tags}
+        isCompleted={isCompleted}
+        id={id}
+      />
       <Divider />
     </Box>
   );

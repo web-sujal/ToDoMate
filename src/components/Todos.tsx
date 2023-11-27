@@ -97,6 +97,7 @@ const Todos = ({
           pendingTodos.map((todo) => (
             <Todo
               title={todo.title}
+              description={todo.description}
               key={todo.id}
               id={todo.id}
               tags={todo.tags}
@@ -106,9 +107,10 @@ const Todos = ({
           completedTodos.map((todo) => (
             <Todo
               title={todo.title}
+              description={todo.description}
               key={todo.id}
               id={todo.id}
-              completed={todo.isCompleted}
+              isCompleted={todo.isCompleted}
               tags={todo.tags}
             />
           ))}
