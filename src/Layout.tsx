@@ -2,29 +2,12 @@ import { Box, Stack } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import "./App.css";
-import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
-import { User } from "@firebase/auth";
+import { Navigate, useLocation } from "react-router-dom";
 import { auth } from "./config/firebase";
 
 const Layout = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = () => {
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          setUser(user);
-          navigate("/overview");
-        } else {
-          navigate("/login");
-        }
-      });
-    };
-
-    return () => unsubscribe();
-  }, []);
+  const user = auth.currentUser;
+  const location = useLocation();
 
   if (location.pathname === "/")
     return user ? <Navigate to="/overview" /> : <Navigate to="/login" />;
