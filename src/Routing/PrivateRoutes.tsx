@@ -2,19 +2,21 @@ import { Navigate } from "react-router";
 import { auth } from "../config/firebase";
 import Layout from "../Layout";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { User } from "firebase/auth";
 
 const PrivateRoutes = () => {
-  // const user = auth.currentUser;
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = () => {
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user);
           navigate("/overview");
         } else {
-          navigate("/settings");
+          navigate("/login");
         }
       });
     };
@@ -22,7 +24,7 @@ const PrivateRoutes = () => {
     return () => unsubscribe();
   }, []);
 
-  return <Layout />;
+  return user ? <Layout /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;

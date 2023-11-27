@@ -102,6 +102,7 @@ const CreateTag = ({ isCreateTagOpen, setIsCreateTagOpen }: CreateTagProps) => {
             px: 1,
           }}
           disableUnderline
+          autoFocus={true}
           placeholder="for example: gym, school, etc..."
           fullWidth
           required
