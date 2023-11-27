@@ -56,23 +56,25 @@ const Todos = ({
       </Box>
 
       {/* add button */}
-      <Button
-        onClick={() => setOpen(true)}
-        sx={{
-          width: "100%",
-          bgcolor: "primary.main",
-          color: "white",
-          cursor: "pointer",
-          fontSize: "large",
-          "&:hover": {
-            bgcolor: "primary.light",
-            transform: "translateY(-3px)",
-            transition: "transform 0.3s",
-          },
-        }}
-      >
-        +
-      </Button>
+      {heading === "Completed" ? null : (
+        <Button
+          onClick={() => setOpen(true)}
+          sx={{
+            width: "100%",
+            bgcolor: "primary.main",
+            color: "white",
+            cursor: "pointer",
+            fontSize: "large",
+            "&:hover": {
+              bgcolor: "primary.light",
+              transform: "translateY(-3px)",
+              transition: "transform 0.3s",
+            },
+          }}
+        >
+          +
+        </Button>
+      )}
 
       {/* Add todo modal */}
       <AddTodo open={open} setOpen={setOpen} />

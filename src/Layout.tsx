@@ -2,15 +2,26 @@ import { Box, Stack } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import "./App.css";
-import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { auth } from "./config/firebase";
+import { useEffect } from "react";
 
 const Layout = () => {
-  const user = auth.currentUser;
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  if (location.pathname === "/")
-    return user ? <Navigate to="/overview" /> : <Navigate to="/login" />;
+  useEffect(() => {
+    const unsubscribe = () => {
+      auth.onAuthStateChanged((currentUser) => {
+        if (currentUser) {
+          navigate("/overview");
+        } else {
+          navigate("/settings");
+        }
+      });
+    };
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Stack direction="row">

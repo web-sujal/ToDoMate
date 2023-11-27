@@ -24,7 +24,7 @@ import InputField from "./InputField";
 import Sidebar from "./Sidebar";
 import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)({
   "&:hover": {
@@ -41,6 +41,7 @@ const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+  const location = useLocation();
   const user = auth.currentUser;
 
   const handleClick = () => {
@@ -51,6 +52,7 @@ const Navbar = () => {
     try {
       await signOut(auth);
       setIsMenuOpen(false);
+
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -198,12 +200,14 @@ const Navbar = () => {
                 />
                 {user ? user?.displayName : <Typography>Profile</Typography>}
               </MenuItem>
-              <MenuItem onClick={handleSignOut} sx={{ gap: 2 }}>
-                <ListItemIcon>
-                  <Logout sx={{ ml: 1 }} fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
+              {location.pathname === "/login" ? null : (
+                <MenuItem onClick={handleSignOut} sx={{ gap: 2 }}>
+                  <ListItemIcon>
+                    <Logout sx={{ ml: 1 }} fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Box>

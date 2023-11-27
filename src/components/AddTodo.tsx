@@ -39,6 +39,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
   const [tags, setTags] = useState<DocumentData>([]);
   const [initialTags, setInitialTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [showError, setShowError] = useState(false);
 
   // firebase
   const user = auth.currentUser;
@@ -69,6 +70,10 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
 
   // event handlers
   const handleClick = async () => {
+    if (title.length === 0) {
+      return setShowError(true);
+    }
+
     if (user) {
       try {
         const todosRef = collection(db, "users", user.uid, "todos");
@@ -91,6 +96,16 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         console.error(err);
       }
     }
+  };
+
+  const handleCancel = () => {
+    setTitle("");
+    setDescription("");
+    setTags([]);
+    setInitialTags([]);
+    setSelectedTags([]);
+    setIsAddTagsOpen(false);
+    setOpen(false);
   };
 
   return (
@@ -127,10 +142,13 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         {/* title */}
         <Typography sx={{ mb: 1 }}>Title</Typography>
         <Input
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            setShowError(false);
+          }}
           value={title}
           sx={{
-            mb: 2,
+            mb: showError ? 0 : 2,
             border: "1px solid",
             borderColor: "secondary.contrastText",
             borderRadius: 1,
@@ -142,6 +160,11 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
           required
           name="todo-title"
         />
+        {showError && (
+          <Typography color={"error"} fontSize={"small"}>
+            *Title cannot be blank
+          </Typography>
+        )}
 
         {/* description */}
         <Typography sx={{ mb: 1 }}>Description</Typography>
@@ -236,10 +259,7 @@ const AddTodo = ({ open, setOpen }: AddTodoProps) => {
         >
           <Button onClick={handleClick}>Add</Button>
           <Button
-            onClick={() => {
-              setOpen(false);
-              setInitialTags([]);
-            }}
+            onClick={handleCancel}
             sx={{ maxWidth: "100px", color: "error" }}
           >
             Cancel
