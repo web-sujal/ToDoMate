@@ -8,12 +8,13 @@ import {
   useTheme,
 } from "@mui/material";
 import { Delete, Edit, Verified } from "@mui/icons-material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Tag from "./Tag";
 
 // firebase
 import { auth, db } from "../config/firebase";
 import { doc, deleteDoc } from "firebase/firestore";
+import UpdateTodo from "./UpdateTodo";
 
 type TodoDetailsProps = {
   isTodoDetailsOpen: boolean;
@@ -38,7 +39,9 @@ const TodoDetails = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const user = auth.currentUser;
 
-  // event handlers
+  // states
+  const [isUpdateTodoOpen, setIsUpdateTodoOpen] = useState(false);
+
   const handleDelete = async () => {
     try {
       if (user) {
@@ -72,10 +75,10 @@ const TodoDetails = ({
           flexDirection: "column",
           alignItems: "start",
           justifyContent: "space-between",
-          gap: 3,
+          gap: 2,
         }}
       >
-        {/* title & isCompleted */}
+        {/* title */}
         <Box
           sx={{
             width: "100%",
@@ -105,7 +108,12 @@ const TodoDetails = ({
           gap={1}
           sx={{ width: "100%" }}
         >
-          <Button variant="outlined" color="info" startIcon={<Edit />}>
+          <Button
+            onClick={() => setIsUpdateTodoOpen(true)}
+            variant="outlined"
+            color="info"
+            startIcon={<Edit />}
+          >
             Edit
           </Button>
           <Button
@@ -116,6 +124,15 @@ const TodoDetails = ({
             Delete
           </Button>
         </Stack>
+
+        <UpdateTodo
+          isUpdateTodoOpen={isUpdateTodoOpen}
+          setIsUpdateTodoOpen={setIsUpdateTodoOpen}
+          title={title}
+          description={description}
+          tags={tags}
+          id={id}
+        />
       </Box>
     </Modal>
   );
