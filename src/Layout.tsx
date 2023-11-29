@@ -1,16 +1,36 @@
-import { Box, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import "./App.css";
 import { Navigate, useLocation } from "react-router-dom";
-import { auth } from "./config/firebase";
+import { AuthContext, AuthContextType } from "./contexts/AuthContext";
+import { useContext } from "react";
 
 const Layout = () => {
-  const user = auth.currentUser;
+  const { user, loading } = useContext(AuthContext) as AuthContextType;
   const location = useLocation();
 
-  if (location.pathname === "/")
-    return user ? <Navigate to="/overview" /> : <Navigate to="/login" />;
+  if (location.pathname === "/") {
+    if (loading) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+            width: "100vw",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      );
+    } else if (user) {
+      return <Navigate to="/overview" />;
+    } else {
+      return <Navigate to="/login" />;
+    }
+  }
 
   return (
     <Stack direction="row">
@@ -23,49 +43,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
-{
-  /*
-import { Box, Stack } from "@mui/material";
-import Sidebar from "./components/Sidebar";
-import Home from "./pages/Home";
-import "./App.css";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { auth } from "./config/firebase";
-import { useEffect } from "react";
-
-const Layout = () => {
-  const user = auth.currentUser;
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = () => {
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          navigate("/overview");
-        } else {
-          navigate("/login");
-        }
-      });
-    };
-
-    return () => unsubscribe();
-  }, []);
-
-  if (location.pathname === "/")
-    return user ? <Navigate to="/overview" /> : <Navigate to="/login" />;
-
-  return (
-    <Stack direction="row">
-      <Box sx={{ display: { xs: "none", sm: "block", height: "100vh" } }}>
-        <Sidebar />
-      </Box>
-      <Home />
-    </Stack>
-  );
-};
-
-export default Layout;
-   */
-}

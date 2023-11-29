@@ -89,7 +89,11 @@ const Overview = () => {
         setTodos(todosArray);
       });
     }
-    return () => unsubscribe();
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   return (
