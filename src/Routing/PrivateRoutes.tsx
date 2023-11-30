@@ -13,13 +13,14 @@ const PrivateRoutes = () => {
         sx={{
           display: "flex",
           alignItems: "center",
+          flexDirection: "column",
           justifyContent: "center",
           height: "100vh",
           width: "100vw",
         }}
       >
         <CircularProgress />
-        <Typography>PrivateRoutes</Typography>
+        <h2>Private Routes</h2>
       </Box>
     );
 
