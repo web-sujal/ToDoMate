@@ -20,7 +20,7 @@ const PrivateRoutes = () => {
         }}
       >
         <CircularProgress />
-        <h2>Private Routes</h2>
+        <h3>Loading</h3>
       </Box>
     );
 

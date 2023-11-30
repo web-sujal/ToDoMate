@@ -24,7 +24,7 @@ const Layout = () => {
           }}
         >
           <CircularProgress />
-          <h2>Layout</h2>
+          <h3>Loading...</h3>
         </Box>
       );
     } else if (user) {
