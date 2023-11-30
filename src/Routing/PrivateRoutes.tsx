@@ -19,6 +19,7 @@ const PrivateRoutes = () => {
         }}
       >
         <CircularProgress />
+        <Typography>PrivateRoutes</Typography>
       </Box>
     );
 

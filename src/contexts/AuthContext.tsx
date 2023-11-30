@@ -12,9 +12,11 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  console.log("in auth context");
 
   useEffect(() => {
     const unsub = () => {
+      console.log("Auth state changed:", user);
       onAuthStateChanged(auth, (user) => {
         if (user) {
           setUser(user);

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import "./App.css";
@@ -23,6 +23,7 @@ const Layout = () => {
           }}
         >
           <CircularProgress />
+          <Typography>Layout</Typography>
         </Box>
       );
     } else if (user) {
