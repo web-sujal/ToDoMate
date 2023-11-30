@@ -27,6 +27,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       });
     };
 
+    unsub();
+
     return () => {
       unsub();
     };
